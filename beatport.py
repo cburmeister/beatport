@@ -66,10 +66,28 @@ class Artists(beatportAPI):
         beatportAPI.__init__(self)
 
     @property
+    def images(self, **kwargs):
+        """ returns dict of images: small, med, large """
+        return self.data[0]['images']
+
+    @property
     def tracks(self, **kwargs):
-        """beatport.Artist(id=391).tracks"""
+        """ returns list of tracks by artist """
         tracks = Tracks(**kwargs)
         return Tracks(artist_id=self.data[0]['id']).data
+
+
+class Search(beatportAPI):
+    def __init__(self, **kwargs):
+        beatportAPI.__init__(self)
+
+    @property
+    def results(self):
+        tracks = []
+        for t in self.data:
+            track = Tracks(id=t['id'])
+            tracks.append(track.data[0])
+        return tracks
 
 
 if __name__ == '__main__':
