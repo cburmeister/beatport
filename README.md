@@ -1,14 +1,11 @@
 # Beatport API Client
 
-This is a python wrapper around the Beatport.com API.
+This is a python wrapper around the Beatport.com API. I also added some
+utility style properties becuase the Beatport API needs some work.
 
-## Usage
-
-### Setup
+## Examples
 
     >>> import beatport
-
-### Examples
 
 Fetch the deep house genre by ID:
 
