@@ -24,7 +24,7 @@ class beatportAPI(object):
     def data(self):
         if self.response.content and self.status == 200:
             json_data = json.loads(self.response.content)
-            json_data = json_data.get('results')[0]
+            json_data = json_data.get('results')
             return json_data
         else:
             return HTTPError(self.status)
