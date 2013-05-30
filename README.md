@@ -19,6 +19,5 @@ This is a python wrapper around the Beatport.com API.
     Dyed Soundorom
 
     >>> tracks = beatport.Tracks(artist_id=111537)
-    >>> print tracks[7]['title']
     >>> print tracks.data[7]['title']
     Kik Me Up (Part 2 ) feat. Meital De-Razon (Original Mix)
