@@ -3,7 +3,7 @@
 import requests
 import json
 
-api_uri = 'http://api.beatport.com'
+api_host = 'http://api.beatport.com'
 api_version = '3'
 
 
@@ -25,7 +25,7 @@ class beatportAPI(object):
 
     @property
     def uri(self):
-        return '%s/%s/%s/%s' % (api_uri, 'catalog', api_version,  self.uri_name)
+        return '%s/%s/%s/%s' % (api_host, 'catalog', api_version, self.uri_name)
 
     @property
     def response(self):
@@ -36,34 +36,50 @@ class beatportAPI(object):
         return self.response.status_code
 
     @property
-    def data(self, metadata=False):
+    def data(self):
         if self.response.content and self.status_code == 200:
             json_data = json.loads(self.response.content)
-            if metadata:
-                return json_data.get('metadata')
-            else: 
-                return json_data.get('results')
+            return json_data.get('results')
         else:
             return HTTPError(self.status_code)
 
     @property
-    def metadata(self):
-        return self.data(metadata=True)
+    def meta(self):
+        if self.response.content and self.status_code == 200:
+            json_data = json.loads(self.response.content)
+            return json_data.get('metadata')
+        else:
+            return HTTPError(self.status_code)
 
+    @property
+    def page(self):
+        return self.meta.get('page')
+
+    @property
+    def has_next(self):
+        return bool(self.meta.get('nextQuery', False))
+
+    @property
+    def has_prev(self):
+        return bool(self.meta.get('prevQuery', False))
+
+    @property
+    def count(self):
+        return self.meta.get('count', 0)
 
 class Genres(beatportAPI):
     def __init__(self, **kwargs):
-        beatportAPI.__init__(self)
+        beatportAPI.__init__(self, **kwargs)
 
 
 class Tracks(beatportAPI):
     def __init__(self, **kwargs):
-        beatportAPI.__init__(self)
+        beatportAPI.__init__(self, **kwargs)
 
 
 class Artists(beatportAPI):
     def __init__(self, **kwargs):
-        beatportAPI.__init__(self)
+        beatportAPI.__init__(self, **kwargs)
 
     @property
     def images(self, **kwargs):
@@ -79,7 +95,7 @@ class Artists(beatportAPI):
 
 class Search(beatportAPI):
     def __init__(self, **kwargs):
-        beatportAPI.__init__(self)
+        beatportAPI.__init__(self, **kwargs)
 
     @property
     def results(self):
