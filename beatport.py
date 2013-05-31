@@ -17,6 +17,7 @@ class HTTPError(Exception):
 
 class beatportAPI(object):
     def __init__(self, **kwargs):
+        self.cached_response = None
         self.payload = kwargs
 
     @property
@@ -29,7 +30,12 @@ class beatportAPI(object):
 
     @property
     def response(self):
-        return requests.get(self.uri, params=self.payload)
+        if not self.cached_response:
+            return requests.get(self.uri, params=self.payload)
+        return self.cached_response
+
+    def clear_cache(self):
+        self.cached_response = None
 
     @property
     def status_code(self):
@@ -51,21 +57,6 @@ class beatportAPI(object):
         else:
             return HTTPError(self.status_code)
 
-    @property
-    def page(self):
-        return self.meta.get('page')
-
-    @property
-    def has_next(self):
-        return bool(self.meta.get('nextQuery', False))
-
-    @property
-    def has_prev(self):
-        return bool(self.meta.get('prevQuery', False))
-
-    @property
-    def count(self):
-        return self.meta.get('count', 0)
 
 class Genres(beatportAPI):
     def __init__(self, **kwargs):
@@ -83,12 +74,12 @@ class Artists(beatportAPI):
 
     @property
     def images(self, **kwargs):
-        """ returns dict of images: small, med, large """
+        """Returns dict of images: small, med, large"""
         return self.data[0]['images']
 
     @property
     def tracks(self, **kwargs):
-        """ returns list of tracks by artist """
+        """Returns list of tracks by artist"""
         tracks = Tracks(**kwargs)
         return Tracks(artist_id=self.data[0]['id']).data
 
@@ -99,6 +90,7 @@ class Search(beatportAPI):
 
     @property
     def results(self):
+        """Returns list of tracks matching query"""
         tracks = []
         for t in self.data:
             track = Tracks(id=t['id'])
