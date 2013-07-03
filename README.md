@@ -1,7 +1,6 @@
 # Beatport API Client
 
-This is a python wrapper around the Beatport.com API. I also added some
-utility style properties becuase the Beatport API needs some work.
+This is a python wrapper around the Beatport.com API.
 
 ## Examples
 
