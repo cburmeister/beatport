@@ -1,9 +1,9 @@
 # Beatport API Client
 
-This is a python wrapper around the Beatport.com API.
-
 [![Build Status](https://travis-ci.org/cburmeister/beatport.png?branch=master)](https://travis-ci.org/cburmeister/beatport)
 [![Coverage Status](https://coveralls.io/repos/cburmeister/beatport/badge.png)](https://coveralls.io/r/cburmeister/beatport)
+
+This is a python wrapper around the Beatport.com API.
 
 ## Examples
 
