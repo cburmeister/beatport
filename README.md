@@ -2,8 +2,13 @@
 
 [![Build Status](https://travis-ci.org/cburmeister/beatport.png?branch=master)](https://travis-ci.org/cburmeister/beatport)
 [![Coverage Status](https://coveralls.io/repos/cburmeister/beatport/badge.png)](https://coveralls.io/r/cburmeister/beatport)
+[![Downloads](https://pypip.in/d/beatport/badge.png)](https://crate.io/package/beatport)
 
 This is a python wrapper around the Beatport.com API.
+
+## Installation
+
+    $ pip install beatport
 
 ## Examples
 
